@@ -42,6 +42,37 @@ exports.createCustomer = (req, res) => {
   db.end()
 }
 
+exports.updateCustomerById = (req, res) => {
+  const db = mysql.createConnection(dbconfig)
+  db.connect()
+  let query = "UPDATE customers SET "
+  if(req.body.first_name){
+    query += `first_name = "${req.body.first_name}",`
+  }
+  if(req.body.last_name){
+    query += `last_name = "${req.body.last_name}",`
+  }
+  if(req.body.phone){
+    query += `phone = "${req.body.phone}",`
+  }
+  if(req.body.email){
+    query += `email = "${req.body.email}",`
+  }
+  query = query.substring(0, query.length -1)
+
+  query += ` WHERE id = ${req.params.customerId};`
+  console.log(query)
+  db.query(query,
+    (err, results) => {
+      if(err) {
+        res.status(500).send(err)
+        return
+      }
+      res.status(202).send(`Customer ${req.params.customerId} updated`)
+    })
+    db.end()
+}
+
 exports.deleteCustomer = (req, res) => {
   const db = mysql.createConnection(dbconfig)
   db.connect()
