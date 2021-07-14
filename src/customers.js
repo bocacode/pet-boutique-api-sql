@@ -5,6 +5,7 @@ const db = mysql.createConnection(dbconfig)
 
 // PUT CUSTOMER-RELATED FUNCTIONS HERE...
 exports.getCustomers = (req, res) => {
+  const db = mysql.createConnection(dbconfig)
   db.connect()
   db.query(`SELECT customers.*, pets.name, pets.type, pets.size
     FROM customers LEFT JOIN pets ON pets.customer_id = customers.id`, (err, rows) => {
@@ -18,6 +19,7 @@ exports.getCustomers = (req, res) => {
 }
 
 exports.createCustomer = (req, res) => {
+  const db = mysql.createConnection(dbconfig)
   db.connect()
   // get new customer data from req.body
   const newCustomer = req.body
@@ -37,6 +39,7 @@ exports.createCustomer = (req, res) => {
 }
 
 exports.updateCustomerById = (req, res) => {
+  const db = mysql.createConnection(dbconfig)
   db.connect()
   let query = "UPDATE customers SET "
   if(req.body.first_name){
