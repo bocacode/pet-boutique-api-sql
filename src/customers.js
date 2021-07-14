@@ -9,8 +9,8 @@ exports.createCustomer = (req, res) => {
   // get new customer data from req.body
   const newCustomer = req.body
   // query to create a customer...
-  db.query(`INSERT INTO customers VALUES
-    (null, "${newCustomer.name}", "${newCustomer.type}", "${newCustomer.size}")`,
+  db.query(`INSERT INTO customers VALUES (null, "${newCustomer.first_name}",
+  "${newCustomer.last_name}", "${newCustomer.phone}", "${newCustomer.email}");`,
   (err, results) => {
     // if error return error with status 500
       if(err) {
