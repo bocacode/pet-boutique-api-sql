@@ -71,5 +71,19 @@ exports.updateCustomerById = (req, res) => {
       }
       res.status(202).send(`Customer ${req.params.customerId} updated`)
     })
+    db.end()
+  }
+  
+  exports.getCustomersByFname = (req , res) => {
+  const db = mysql.createConnection(dbconfig)
+  db.connect()
+  const { firstName } = req.params
+  db.query(`SELECT * FROM customers WHERE first_name = "${ firstName }"`, (err, rows) =>{
+    if (err) {
+      res.status(500).send(err)
+      return
+    }
+    res.send(rows)
+  })
   db.end()
 }
