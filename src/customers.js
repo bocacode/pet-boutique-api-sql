@@ -35,3 +35,22 @@ exports.createCustomer = (req, res) => {
     })
   db.end()
 }
+
+exports.updateCustomerById = (req, res) => {
+  db.connect()
+  let query = "UPDATE customers SET "
+  if(req.body.first_name){
+    query += `first_name = "${req.body.first_name}"`
+  }
+  query += ` WHERE id = ${req.params.customerId};`
+  console.log(query)
+  db.query(query,
+    (err, results) => {
+      if(err) {
+        res.status(500).send(err)
+        return
+      }
+      res.status(202).send(`Customer ${req.params.customerId} updated`)
+    })
+  db.end()
+}
