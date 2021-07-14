@@ -29,6 +29,19 @@ exports.getPets = (req, res) => {
       db.end()
 }
 
+exports.deletePets = (req, res) => {
+    const db = mysql.createConnection(dbconfig)
+    db.connect()
+    db.query(`DELETE FROM pets WHERE id = ${req.params.id}`, (err)=> {
+        if (err) {
+            res.status(203).send(err)
+            return
+        }
+        res.status(500).send("pets deleted")
+    })    
+      db.end()
+}
+
 exports.updatePet = (req, res) => {
     const db = mysql.createConnection(dbconfig)
     db.connect()
