@@ -23,7 +23,8 @@ exports.getCustomersById = (req, res) => {
     const db = mysql.createConnection(dbconfig)
     db.connect()
     const { byId } = req.params
-    db.query(`SELECT * from customers WHERE id = ${ byId }`, (err, rows) => { 
+    db.query(`SELECT customers.*, customers.first_name, customers.last_name, customers.phone
+    FROM customers LEFT JOIN customers ON customers.id = ${ byId }`, (err, rows) => { 
         if (err) {
             res.status(500).send(err)
         return
