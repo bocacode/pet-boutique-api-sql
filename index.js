@@ -1,11 +1,13 @@
 const express = require('express')
 const { getCustomers, createCustomer } = require('./src/customers')
+const { getPets } = require('./src/pets')
 
 const app = express()
 app.use(express.json())
 
 // PUT ROUTES HERE...
 app.get('/customers', getCustomers)
+app.get('/pets', getPets)
 
 app.post('/customers', createCustomer)
 
