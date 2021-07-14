@@ -1,6 +1,6 @@
 const express = require('express')
 const { getCustomers, createCustomer } = require('./src/customers')
-const { getPets } = require('./src/pets')
+const { getPets, updatePet } = require('./src/pets')
 
 const app = express()
 app.use(express.json())
@@ -10,6 +10,8 @@ app.get('/customers', getCustomers)
 app.get('/pets', getPets)
 
 app.post('/customers', createCustomer)
+
+app.patch('/pets/:id', updatePet)
 
 app.listen(3000, () => {
   console.log('listening on http://localhost:3000...')
