@@ -6,19 +6,34 @@ const { dbconfig } = require("./dbconfig")
 exports.getCustomers = (req, res) => {
   const db = mysql.createConnection(dbconfig)
   db.connect()
-  db.query(
-    `SELECT customers.* , pets.name, pets.type, pets.size
-    FROM customers LEFT JOIN pets ON pets.customer_id = customers.id`,
-    (err, rows) => {
-      if (err) {
-        res.status(500).send(err)
-        return
+  db.query(`SELECT * FROM customers`, (err, rows) => {
+    if (err) {
+      res.status(500).send(err)
+      return
       }
       res.send(rows)
     }
   )
   db.end()
 }
+
+
+
+
+exports.getCustomersById = (req, res) => {
+    const db = mysql.createConnection(dbconfig)
+    db.connect()
+    const { byId } = req.params
+    db.query(`SELECT * from customers WHERE id = ${ byId }`, (err, rows) => { 
+        if (err) {
+            res.status(500).send(err)
+        return
+        }
+        res.send(rows)
+    })
+     db.end()
+   }
+    
 
 exports.createCustomer = (req, res) => {
   const db = mysql.createConnection(dbconfig)
@@ -29,16 +44,14 @@ exports.createCustomer = (req, res) => {
   db.query(
     `INSERT INTO customers VALUES (null, "${newCustomer.first_name}",
   "${newCustomer.last_name}", "${newCustomer.phone}", "${newCustomer.email}");`,
-    (err, results) => {
-      // if error return error with status 500
-      if (err) {
+  (err, results) => {
+      if(err) {
         res.status(500).send(err)
         return
       }
       // otherwise return OK with status 201
       res.status(201).send("Customer created")
-    }
-  )
+    })
   db.end()
 }
 
