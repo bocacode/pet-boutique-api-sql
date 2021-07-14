@@ -1,6 +1,6 @@
 const express = require('express')
 const { getCustomers, createCustomer } = require('./src/customers')
-const { getPetById, getPets } = require('./src/pets')
+const { getPetById, getPets, deletePets } = require('./src/pets')
 
 const app = express()
 app.use(express.json())
@@ -10,6 +10,7 @@ app.get('/customers', getCustomers)
 app.get('/pets/:byId', getPetById)
 app.get('/pets', getPets)
 
+app.delete('/pets/:id', deletePets)
 
 app.post('/customers', createCustomer)
 
