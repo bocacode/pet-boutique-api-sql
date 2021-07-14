@@ -1,5 +1,5 @@
 const express = require('express')
-const { getCustomers, createCustomer, getCustomersByFname } = require('./src/customers')
+const { getCustomers, createCustomer, getCustomersByFname, deleteCustomer } = require('./src/customers')
 const { getPetById, getPets } = require('./src/pets')
 
 const app = express()
@@ -10,6 +10,8 @@ app.get('/customers/:firstName', getCustomersByFname)
 app.get('/customers', getCustomers)
 app.get('/pets/:byId', getPetById)
 app.get('/pets', getPets)
+
+app.delete("/customers/:id", deleteCustomer)
 
 app.post('/customers', createCustomer)
 

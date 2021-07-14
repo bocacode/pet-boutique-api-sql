@@ -1,9 +1,9 @@
 const mysql = require('mysql')
 const { dbconfig } = require('../dbconfig')
 
-const db = mysql.createConnection(dbconfig)
 
 exports.getPetById = (req, res) => {
+    const db = mysql.createConnection(dbconfig)
     db.connect()
     const { byId } = req.params
     db.query(`SELECT * FROM pets WHERE id = ${ byId }`, (err,rows) => {
@@ -17,6 +17,7 @@ exports.getPetById = (req, res) => {
 }
 
 exports.getPets = (req, res) => {
+    const db = mysql.createConnection(dbconfig)
     db.connect()
     db.query(`SELECT * FROM pets`, (err, rows) => {
         if (err) {
