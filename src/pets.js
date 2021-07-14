@@ -15,3 +15,15 @@ exports.getPetById = (req, res) => {
     })
     db.end()
 }
+
+exports.getPets = (req, res) => {
+    db.connect()
+    db.query(`SELECT * FROM pets`, (err, rows) => {
+        if (err) {
+            res.status(500).send(err)
+            return
+        }
+        res.send(rows)
+    })    
+      db.end()
+}
