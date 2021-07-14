@@ -1,10 +1,10 @@
 const mysql = require("mysql")
 const { dbconfig } = require("./dbconfig")
 
-const db = mysql.createConnection(dbconfig)
 
 // PUT CUSTOMER-RELATED FUNCTIONS HERE...
 exports.getCustomers = (req, res) => {
+  const db = mysql.createConnection(dbconfig)
   db.connect()
   db.query(
     `SELECT customers.* , pets.name, pets.type, pets.size
@@ -21,6 +21,7 @@ exports.getCustomers = (req, res) => {
 }
 
 exports.createCustomer = (req, res) => {
+  const db = mysql.createConnection(dbconfig)
   db.connect()
   // get new customer data from req.body
   const newCustomer = req.body
@@ -42,6 +43,7 @@ exports.createCustomer = (req, res) => {
 }
 
 exports.deleteCustomer = (req, res) => {
+  const db = mysql.createConnection(dbconfig)
   db.connect()
   db.query(`DELETE FROM customers WHERE id = ${req.params.id}`, (err) => {
     if (err) {
