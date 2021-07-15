@@ -106,15 +106,33 @@ exports.updateCustomerById = (req, res) => {
   }
   
   exports.getCustomersByFname = (req , res) => {
-  const db = mysql.createConnection(dbconfig)
-  db.connect()
-  const { firstName } = req.params
-  db.query(`SELECT * FROM customers WHERE first_name = "${ firstName }"`, (err, rows) =>{
-    if (err) {
-      res.status(500).send(err)
-      return
-    }
-    res.send(rows)
-  })
-  db.end()
-}
+    const db = mysql.createConnection(dbconfig)
+    db.connect()
+    const { firstName } = req.params
+    db.query(`SELECT * FROM customers WHERE first_name = "${ firstName }"`, (err, rows) =>{
+      if (err) {
+        res.status(500).send(err)
+        return
+      }
+      res.send(rows)
+    })
+    db.end()
+  }
+
+  exports.getPetsByCustomerName = (req,res) => {
+    const db = mysql.createConnection(dbconfig)
+    db.connect()
+    const {fname} = req.params
+    db.query(
+      //working, but split results
+      `SELECT customers.* , pets.name, pets.type, pets.size
+      FROM customers LEFT JOIN pets ON pets.customer_id = customers.id WHERE first_name = "${fname}"`,
+      (err,results) => {
+        if(err) {
+          res.status(500).send(err)
+          return
+        }
+        res.status(200).send(results)
+      })
+      db.end()
+  }

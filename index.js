@@ -1,5 +1,5 @@
 const express = require('express')
-const { getCustomers, createCustomer, deleteCustomer, updateCustomerById, getCustomersByFname } = require('./src/customers')
+const { getCustomers, createCustomer, deleteCustomer, updateCustomerById, getCustomersByFname, getPetsByCustomerName } = require('./src/customers')
 const { getPetById, getPets, getPetByName, updatePet, deletePets } = require("./src/pets")
 
 const app = express()
@@ -8,6 +8,7 @@ app.use(express.json())
 // PUT ROUTES HERE...
 app.get("/pets/name/:petname", getPetByName)
 app.get('/pets/:byId', getPetById)
+app.get('/customers/pets/:fname', getPetsByCustomerName)
 app.get('/customers/:firstName', getCustomersByFname)
 app.get('/customers', getCustomers)
 app.get('/pets', getPets)
